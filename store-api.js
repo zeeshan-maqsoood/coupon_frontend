@@ -4,7 +4,7 @@
  */
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://coupon-management-h6zh-28purmxx6-zeeshanmaqsooods-projects.vercel.app/api';
 
 /**
  * Fetches store data from the API
