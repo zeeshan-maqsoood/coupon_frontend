@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Trigger (your existing one; just add data-*) -->
+    <div class="col-md-2">
+      <div
+        class="btnsBox pop_trigger"
+        id="14"
+        data-title="Copy Code At Checkout And Receive 15% Off"
+        data-shop="TheLAShop"
+        data-code="LNA15"
+        data-link="https://eoupon.site/shop.html?cid=14"
+      >
+        <span class="cp_outer btn-outer">Show Code</span>
+        <span class="cp_inner btn-inner">EOUPON</span>
+      </div>
+    </div>
+
+    <!-- ===== Coupon Modal ===== -->
+    <div class="coupon-overlay" id="couponOverlay" hidden></div>
+
+    <div class="coupon-modal" id="couponModal" aria-hidden="true" role="dialog">
+      <button class="coupon-close" id="couponClose" aria-label="Close">
+        ×
+      </button>
+
+      <div class="coupon-header">
+        <div class="logo">LA<span>SHOP</span></div>
+        <h3 id="couponTitle">Copy Code At Checkout And Receive 15% Off</h3>
+      </div>
+
+      <p class="coupon-sub">
+        Copy the code and go to
+        <a id="couponShop" href="#" target="_blank" rel="noopener">TheLAShop</a>
+      </p>
+
+      <div class="coupon-code-row">
+        <span class="coupon-code" id="couponCode">LNA15</span>
+        <button class="copy-btn" id="copyBtn" type="button">Tap To Copy</button>
+      </div>
+
+      <a class="more-link" id="moreLink" href="#" target="_blank" rel="noopener"
+        >More Coupons &raquo;</a
+      >
+
+      <div class="brand">Couponreals</div>
+    </div>
+
+    <style>
+      /* --- Overlay --- */
+      .coupon-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 1000;
+      }
+
+      /* --- Modal Card --- */
+      .coupon-modal {
+        position: fixed;
+        left: 50%;
+        top: -30%;
+        transform: translate(-50%, -50%);
+        width: min(560px, 92vw);
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        padding: 22px 22px 26px;
+        z-index: 1001;
+        opacity: 0;
+        pointer-events: none;
+        /* start offscreen, then slide to center */
+        animation: none;
+      }
+
+      /* active states toggled by JS */
+      .coupon-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .coupon-modal.show {
+        pointer-events: auto;
+        opacity: 1;
+        animation: dropIn 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+
+      @keyframes dropIn {
+        0% {
+          top: -30%;
+        }
+        60% {
+          top: 56%;
+        }
+        100% {
+          top: 50%;
+        }
+      }
+
+      /* Close button */
+      .coupon-close {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        border: 0;
+        background: transparent;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        color: #5a5a5a;
+      }
+      .coupon-close:hover {
+        color: #111;
+      }
+
+      /* Header */
+      .coupon-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 12px;
+      }
+      .logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-family: system-ui, sans-serif;
+        background: #f3f3f3;
+        color: #e53935;
+      }
+      .logo span {
+        color: #111;
+      }
+      .coupon-header h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #2c2c2c;
+      }
+
+      /* Sub text */
+      .coupon-sub {
+        text-align: center;
+        margin: 14px 0 18px;
+        color: #616161;
+      }
+      .coupon-sub a {
+        color: #1aa334;
+        text-decoration: none;
+      }
+      .coupon-sub a:hover {
+        text-decoration: underline;
+      }
+
+      /* Code row */
+      .coupon-code-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: stretch;
+      }
+      .coupon-code {
+        display: grid;
+        place-items: center;
+        border: 2px dashed #1aa334;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        color: #2b2b2b;
+        user-select: all;
+      }
+      .copy-btn {
+        border: 0;
+        padding: 0 18px;
+        border-radius: 8px;
+        background: #18a53b;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .copy-btn:active {
+        transform: translateY(1px);
+      }
+
+      /* Footer link + brand */
+      .more-link {
+        display: block;
+        text-align: center;
+        margin: 16px 0 6px;
+        color: #1aa334;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .more-link:hover {
+        text-decoration: underline;
+      }
+      .brand {
+        text-align: center;
+        color: #23aa43;
+        font-family: "Georgia", serif;
+        font-style: italic;
+      }
+
+      /* Small screens */
+      @media (max-width: 420px) {
+        .coupon-code {
+          font-size: 18px;
+        }
+        .copy-btn {
+          padding: 10px 14px;
+        }
+      }
+    </style>
+
+    <script>
+      (function () {
+        const overlay = document.getElementById("couponOverlay");
+        const modal = document.getElementById("couponModal");
+        const closeBtn = document.getElementById("couponClose");
+        const titleEl = document.getElementById("couponTitle");
+        const shopEl = document.getElementById("couponShop");
+        const codeEl = document.getElementById("couponCode");
+        const copyBtn = document.getElementById("copyBtn");
+        const moreLnk = document.getElementById("moreLink");
+
+        // Open modal from any .pop_trigger (supports multiple cards)
+        document.addEventListener("click", (e) => {
+          const trigger = e.target.closest(".pop_trigger");
+          if (!trigger) return;
+
+          // Pull data from attributes (fallbacks provided)
+          const title = trigger.dataset.title || "Copy Code At Checkout";
+          const shop = trigger.dataset.shop || "Shop";
+          const code = trigger.dataset.code || "CODE123";
+          const link =
+            trigger.getAttribute("href") || trigger.dataset.link || "#";
+
+          titleEl.textContent = title;
+          shopEl.textContent = shop;
+          shopEl.href = link;
+          codeEl.textContent = code;
+          moreLnk.href = link;
+
+          // show
+          overlay.hidden = false;
+          overlay.classList.add("show");
+          modal.classList.add("show");
+          modal.setAttribute("aria-hidden", "false");
+
+          // focus the copy button for quick access
+          setTimeout(() => copyBtn.focus(), 120);
+        });
+
+        // Copy functionality
+        copyBtn.addEventListener("click", async () => {
+          const code = codeEl.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(code);
+            const prev = copyBtn.textContent;
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => (copyBtn.textContent = prev), 1200);
+          } catch {
+            // Fallback: select text
+            const range = document.createRange();
+            range.selectNodeContents(codeEl);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.execCommand("copy");
+            sel.removeAllRanges();
+          }
+        });
+
+        // Close handlers
+        function closeModal() {
+          modal.classList.remove("show");
+          overlay.classList.remove("show");
+          modal.setAttribute("aria-hidden", "true");
+          // delay hiding overlay to allow fade-out
+          setTimeout(() => {
+            overlay.hidden = true;
+          }, 250);
+        }
+        closeBtn.addEventListener("click", closeModal);
+        overlay.addEventListener("click", closeModal);
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeModal();
+        });
+      })();
+    </script>
+  </body>
+</html>
